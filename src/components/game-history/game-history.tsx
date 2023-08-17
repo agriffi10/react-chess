@@ -15,12 +15,15 @@ const MoveHistory = ({ history }: IMoveHistoryProps) => {
     }
   };
   return (
-    <div id="game-history">
-      {history.map((item, index) => (
-        <p className="history-line" key={index}>{`${convertName(
-          item.color
-        )} moved ${item.piece} from ${item.from} to ${item.to}`}</p>
-      ))}
+    <div id="game-history" className="card">
+      <h3>Total Moves - {history.length}</h3>
+      <ul className="history-list">
+        {history.map((item, index) => (
+          <li className="card history-line" key={index}>{`${convertName(
+            item.color
+          )} moved ${item.piece} from ${item.from} to ${item.to}`}</li>
+        ))}
+      </ul>
     </div>
   );
 };

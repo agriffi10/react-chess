@@ -3,9 +3,11 @@ import { Chess, Move } from 'chess.js';
 import { useEffect, useMemo, useState } from 'react';
 import MoveHistory from '../game-history/game-history';
 import { ISimpleMove } from '../../interfaces/ISimpleMove';
-import { ToastContainer, toast } from 'react-toastify';
+import Alert from '../alert/alert';
 import 'react-toastify/dist/ReactToastify.css';
 import './chessboard-wrapper.css';
+import GameOverScreen from '../game-over-screen/game-over-screen';
+import PlayerMenu from '../player-menu/player-menu';
 
 interface IPlayerMove {
   piece: string;
@@ -16,42 +18,41 @@ interface IPlayerMove {
 const ChessBoardWrapper = () => {
   const [game] = useState(new Chess());
   const [position, setPosition] = useState(game.fen());
-  const [gameState, setGameState] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
   const [currentPlayer, setCurrentPlayer] = useState('White');
   const [playerHistory, setPlayerHistory] = useState<ISimpleMove[]>([]);
+  const [gameIsOver, setGameIsOver] = useState(false);
 
   const onDrop = ({ piece, sourceSquare, targetSquare }: IPlayerMove) => {
     if (sourceSquare === targetSquare) return;
     try {
       game.move({ from: sourceSquare, to: targetSquare, promotion: 'q' });
       setPosition(game.fen());
-      checkGameState();
       checkCurrentPlayer();
       setMoves();
     } catch (e) {
       // TODO: Alert player if actual invalid move or if in check
-      setGameState('Invalid Move');
+      checkPlayerState();
+      checkIfGameOver();
     }
   };
 
   const setMoves = () => {
     const history = game.history({ verbose: true });
+    console.log(history);
     setPlayerHistory([
-      ...playerHistory,
       ...(history.slice(-1) as ISimpleMove[]),
+      ...playerHistory,
     ]);
+    checkIfGameOver();
   };
 
-  const checkGameState = () => {
-    console.log('hit');
-    const state = game.isCheckmate()
-      ? 'Checkmate'
-      : game.isStalemate()
-      ? 'Stalemate'
-      : game.isCheck()
-      ? 'Check'
-      : '';
-    if (state != gameState) setGameState(state);
+  const checkPlayerState = () => {
+    if (game.isCheck()) {
+      setAlertMessage('Check');
+    } else {
+      setAlertMessage('Invalid Move');
+    }
   };
 
   const checkCurrentPlayer = () => {
@@ -62,68 +63,43 @@ const ChessBoardWrapper = () => {
     }
   };
 
-  const createBanner = () => {
-    if (gameState) {
-      toast(gameState, {
-        position: 'bottom-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-      });
-    }
-    if (!game.isGameOver()) return;
-    if (confirm(`Game over, winner ${currentPlayer}, play again?`)) {
-      game.clear();
-    }
+  const checkIfGameOver = () => {
+    console.log(game.isGameOver());
+    setGameIsOver(game.isGameOver());
+  };
+
+  const clearMessageFromAlert = () => {
+    setAlertMessage('');
   };
 
   const resetGame = () => {
-    if (confirm('do you want to reset')) {
-      game.reset();
-      setCurrentPlayer('White');
-      setGameState('');
-      setPosition(game.fen());
-      setMoves();
-    }
+    game.clear();
+    game.reset();
+    setCurrentPlayer('White');
+    setPosition('start');
+    checkIfGameOver();
+    setPlayerHistory([]);
   };
 
-  useMemo(() => {
-    createBanner();
-    console.log('hit again');
-    console.log(gameState);
-  }, [gameState]);
-
   return (
-    <div id="play-area">
-      <div>
-        <MoveHistory history={playerHistory} />
+    <>
+      <div id="play-area">
+        <div className="history">
+          <MoveHistory history={playerHistory} />
+        </div>
+        <div className="board">
+          <Chessboard position={position} onDrop={onDrop} />
+        </div>
+        <div className="menu">
+          <PlayerMenu currentPlayer={currentPlayer} resetGame={resetGame} />
+        </div>
       </div>
-      <div>
-        <h1 className="player-title">Current Player: {currentPlayer}</h1>
-        <Chessboard position={position} onDrop={onDrop} />
-      </div>
-      <div>
-        <button onClick={resetGame}>Reset</button>
-      </div>
-      {gameState && (
-        <ToastContainer
-          position="bottom-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
-      )}
-    </div>
+      <Alert
+        message={alertMessage}
+        clearMessageFromAlert={clearMessageFromAlert}
+      />
+      {gameIsOver && <GameOverScreen resetGame={resetGame} />}
+    </>
   );
 };
 
