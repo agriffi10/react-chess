@@ -1,0 +1,33 @@
+#play-area {
+  display: flex;
+  justify-content: center;
+}
+
+#play-area .board,
+#play-area .menu,
+#play-area .history {
+  padding: 0 1rem;
+  justify-content: center;
+}
+
+@media (max-width: 1024px) {
+  #play-area {
+    flex-direction: column;
+  }
+
+  #play-area .board,
+  #play-area .menu,
+  #play-area.history {
+    margin-bottom: 1rem;
+  }
+
+  #play-area .board {
+    order: 0;
+  }
+  #play-area .menu {
+    order: 1;
+  }
+  #play-area .history {
+    order: 2;
+  }
+}
