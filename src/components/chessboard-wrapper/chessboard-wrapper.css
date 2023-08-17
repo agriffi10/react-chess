@@ -1,0 +1,9 @@
+#play-area {
+  display: flex;
+  justify-content: center;
+}
+
+#play-area > div {
+  padding: 0 1rem;
+  justify-content: center;
+}

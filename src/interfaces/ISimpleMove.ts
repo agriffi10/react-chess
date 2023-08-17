@@ -1,5 +1,5 @@
 export interface ISimpleMove {
-  player: string;
+  color: string;
   after: string;
   before: string;
   piece: string;

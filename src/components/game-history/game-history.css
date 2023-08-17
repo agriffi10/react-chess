@@ -1,0 +1,11 @@
+#game-history {
+  word-wrap: break-word;
+  margin-top: 8rem;
+}
+
+#game-history .history-line {
+  border-radius: 3rem;
+  padding: 1rem;
+  background-color: #5b6467;
+  background-image: linear-gradient(315deg, #5b6467 0%, #8b939a 74%);
+}
