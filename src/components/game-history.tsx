@@ -1,6 +1,4 @@
-import { Chess } from 'chess.js';
-import { useState, useMemo } from 'react';
-import { ISimpleMove } from './chessboard-wrapper';
+import { ISimpleMove } from '../interfaces/ISimpleMove';
 
 interface IMoveHistoryProps {
   history: ISimpleMove[];

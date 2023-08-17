@@ -2,25 +2,12 @@ import Chessboard from 'chessboardjsx';
 import { Chess, Move } from 'chess.js';
 import { useEffect, useMemo, useState } from 'react';
 import MoveHistory from './game-history';
+import { ISimpleMove } from '../interfaces/ISimpleMove';
 
-export interface IChessBoardWrapperProps {
-  position: string;
-  showNotation: boolean;
-}
-
-export interface IPlayerMove {
+interface IPlayerMove {
   piece: string;
   sourceSquare: string;
   targetSquare: string;
-}
-
-export interface ISimpleMove {
-  player: string;
-  after: string;
-  before: string;
-  piece: string;
-  from: string;
-  to: string;
 }
 
 const ChessBoardWrapper = () => {
@@ -78,7 +65,7 @@ const ChessBoardWrapper = () => {
     }
   };
 
-  const createBanner = (state: string) => {
+  const createBanner = () => {
     if (!game.isGameOver()) return;
     if (confirm(`Game over, winner ${currentPlayer}, play again?`)) {
       game.clear();
@@ -96,7 +83,7 @@ const ChessBoardWrapper = () => {
   };
 
   useMemo(() => {
-    createBanner(gameState);
+    createBanner();
   }, [gameState]);
 
   return (
