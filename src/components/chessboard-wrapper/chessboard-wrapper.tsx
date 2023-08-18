@@ -3,7 +3,7 @@ import { Chess, Square } from 'chess.js';
 import { useState } from 'react';
 import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import Alert from '../alert/alert';
-import MoveHistory from '../game-history/game-history';
+import GameHistory from '../game-history/game-history';
 import GameOverScreen from '../game-over-screen/game-over-screen';
 import 'react-toastify/dist/ReactToastify.css';
 import './chessboard-wrapper.css';
@@ -128,7 +128,7 @@ const ChessBoardWrapper = () => {
     <>
       <div id="play-area">
         <div className="history">
-          <MoveHistory history={playerHistory} />
+          <GameHistory history={playerHistory} />
         </div>
         <div className="board">
           <CurrentPlayerBanner currentPlayer={currentPlayer} />
