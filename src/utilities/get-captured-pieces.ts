@@ -9,7 +9,6 @@ export const getCapturedPieces = (color: string, history: ISimpleMove[]) => {
 
   for (const move of history) {
     if (move.hasOwnProperty('captured') && move.color !== color[0]) {
-      console.log(move);
       if (move.captured) {
         captured[move.captured]++;
       }

@@ -27,7 +27,7 @@ const PlayerStats = ({ color, history }: IPlayerStatsProps) => {
     );
   };
   return (
-    <div className="player-stats-block">
+    <div className="player-stats-block card">
       <h4 className="stats-block-name">Player {convertName(color)}</h4>
       <div>{renderTakenPieces(color, history)}</div>
     </div>

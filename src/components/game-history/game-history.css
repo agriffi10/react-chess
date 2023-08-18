@@ -24,9 +24,9 @@
   margin-bottom: 0.8rem;
 }
 
-#game-history .-black {
+#game-history .history-line.-black {
   border-left: 0.7rem solid black;
 }
-#game-history .-white {
+#game-history .history-line.-white {
   border-left: 0.7rem solid white;
 }
