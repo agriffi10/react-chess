@@ -46,6 +46,7 @@ const ChessBoardWrapper = () => {
       setMoves();
       setCurrentPlayer(convertName(game.turn()));
       setGameIsOver(game.isGameOver());
+      checkPlayerState(true);
     } catch (e) {
       checkPlayerState();
     }
@@ -61,12 +62,14 @@ const ChessBoardWrapper = () => {
     removeHighlightSquare();
   };
 
-  const checkPlayerState = () => {
+  const checkPlayerState = (onlyForCheck: boolean = false) => {
     // This only alerts if you are current in check
     // Moving your king to an in check position will just generate an invalid move
     if (game.isCheck()) {
+      // Needed a flag onlyForCheck so when Player X puts Player Y in check
+      // then an appropriate notification is generated.
       setAlertMessage('Check');
-    } else {
+    } else if (!onlyForCheck) {
       setAlertMessage('Invalid Move');
     }
   };
@@ -84,7 +87,7 @@ const ChessBoardWrapper = () => {
 
   const getCurrentGameHistory = () => {
     // Unaltered history according to the game
-    // Player history is an altered list
+    // Player history is an altered list of objects with overlapping keys
     return game.history({ verbose: true });
   };
 
@@ -151,7 +154,7 @@ const ChessBoardWrapper = () => {
         />
       )}
 
-      {gameIsOver && playerHistory.length && (
+      {gameIsOver && playerHistory.length > 0 && (
         <GameOverScreen
           isCheckmate={game.isCheckmate()}
           isStalemate={game.isStalemate()}

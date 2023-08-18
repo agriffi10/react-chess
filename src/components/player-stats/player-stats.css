@@ -2,6 +2,7 @@
   min-width: 260px;
   padding: 0;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .player-stats-block .stats-block-name,
