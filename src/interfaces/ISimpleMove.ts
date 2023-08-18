@@ -5,4 +5,5 @@ export interface ISimpleMove {
   piece: string;
   from: string;
   to: string;
+  captured?: string | undefined;
 }
