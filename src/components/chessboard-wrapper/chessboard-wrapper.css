@@ -20,7 +20,7 @@
   width: 100%;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1199px) {
   #play-area {
     flex-direction: column;
   }
@@ -39,5 +39,9 @@
   }
   #play-area .history {
     order: 2;
+  }
+
+  #play-area .menu #player-actions {
+    margin-top: 0.5rem;
   }
 }

@@ -1,5 +1,7 @@
 import { Pieces } from '../constants/Pieces';
 
+// Returns friendly name of the pieces
+// Defaults to Pawn
 export const convertPieceName = (piece: string) => {
   switch (piece.toLowerCase()) {
     case 'b':

@@ -9,21 +9,23 @@ interface IMoveHistoryProps {
 }
 
 const MoveHistory = ({ history }: IMoveHistoryProps) => {
+  const getHistoryItem = (item: ISimpleMove, index: number) => {
+    return (
+      <li
+        className={`card history-line ${getPlayerClassModifier(item.color)}`}
+        key={index}>
+        <b>{convertName(item.color)}</b> moved {convertPieceName(item.piece)}{' '}
+        from {item.from.toUpperCase()} to {item.to.toUpperCase()}
+        {item.captured && <>, captured {convertPieceName(item.captured)}</>}
+      </li>
+    );
+  };
+
   return (
     <div id="game-history" className="card">
       <h3>Total Moves - {history.length}</h3>
       <ul className="history-list">
-        {history.map((item, index) => (
-          <li
-            className={`card history-line ${getPlayerClassModifier(
-              item.color
-            )}`}
-            key={index}>
-            <b>{convertName(item.color)}</b> moved{' '}
-            {convertPieceName(item.piece)} from {item.from.toUpperCase()} to{' '}
-            {item.to.toUpperCase()}
-          </li>
-        ))}
+        {history.map((item, index) => getHistoryItem(item, index))}
       </ul>
     </div>
   );

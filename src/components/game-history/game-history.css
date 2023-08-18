@@ -1,7 +1,7 @@
 #game-history {
   word-wrap: break-word;
   text-align: center;
-  min-width: 260px;
+  min-width: 290px;
   margin-top: 0;
   height: 100%;
 }
@@ -9,7 +9,7 @@
 #game-history .history-list {
   padding: 0 10px;
   margin: 0;
-  max-height: 470px;
+  height: 470px;
   overflow-y: auto;
   padding-right: 10px;
 }
