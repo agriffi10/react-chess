@@ -1,6 +1,6 @@
 import Chessboard from 'chessboardjsx';
 import { Chess, Square } from 'chess.js';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import Alert from '../alert/alert';
 import GameHistory from '../game-history/game-history';
@@ -18,8 +18,10 @@ interface IPlayerMove {
   targetSquare: string;
 }
 interface IHighlightStyle {
-  background: string;
-  borderRadius: string;
+  background?: string;
+  borderRadius?: string;
+  border?: string;
+  borderStyle?: string;
 }
 
 interface IHighlightStyleObject {
@@ -36,6 +38,7 @@ const ChessBoardWrapper = () => {
     convertName(game.turn())
   );
   const [gameIsOver, setGameIsOver] = useState<boolean>(game.isGameOver());
+  const [currentSquare, setCurrentSquare] = useState<Square | string>('');
 
   const onDrop = ({ sourceSquare, targetSquare }: IPlayerMove) => {
     if (sourceSquare === targetSquare) return;
@@ -72,6 +75,9 @@ const ChessBoardWrapper = () => {
     } else if (!onlyForCheck) {
       setAlertMessage('Invalid Move');
     }
+    // Setting this here because we anytime we check this
+    // we want to clear the selected square
+    setCurrentSquare('');
   };
 
   const clearMessageFromAlert = () => {
@@ -92,6 +98,7 @@ const ChessBoardWrapper = () => {
   };
 
   const removeHighlightSquare = () => {
+    if (currentSquare) return;
     setSquareStyles({});
   };
 
@@ -115,6 +122,7 @@ const ChessBoardWrapper = () => {
 
   const onMouseOverSquare = (square: Square) => {
     // Get list of moves' to locations and add highlights to them
+    if (currentSquare) return;
     const moves = game.moves({
       square: square,
       verbose: true,
@@ -123,6 +131,33 @@ const ChessBoardWrapper = () => {
     const squaresToHighlight = moves.map((move) => move.to);
     highlightSquare(square, squaresToHighlight);
   };
+
+  const onSquareClick = (square: Square) => {
+    if (currentSquare && currentSquare != square) {
+      // We have a current square and are clicking a new square
+      onDrop({ sourceSquare: currentSquare, targetSquare: square });
+    } else if (!currentSquare) {
+      // We're setting a brand new current square
+      const highlightStyles: IHighlightStyleObject = {};
+      highlightStyles[square] = {
+        border: '2px solid yellow',
+        borderStyle: 'inset',
+      };
+      setCurrentSquare(square);
+      setSquareStyles({ ...squareStyles, ...highlightStyles });
+    } else if (square === currentSquare) {
+      // We're clicking on an already selected square
+      deselectSquare();
+    }
+  };
+
+  const deselectSquare = () => {
+    setCurrentSquare('');
+  };
+
+  useMemo(() => {
+    if (!currentSquare) removeHighlightSquare();
+  }, [currentSquare]);
 
   return (
     <>
@@ -138,6 +173,8 @@ const ChessBoardWrapper = () => {
             position={position}
             squareStyles={squareStyles}
             onMouseOutSquare={removeHighlightSquare}
+            onSquareRightClick={deselectSquare}
+            onSquareClick={onSquareClick}
             onDrop={onDrop}
           />
         </div>
