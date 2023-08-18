@@ -1,5 +1,5 @@
 import Chessboard from 'chessboardjsx';
-import { Chess, Move, Square } from 'chess.js';
+import { Chess, Square } from 'chess.js';
 import { useState } from 'react';
 import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import Alert from '../alert/alert';
