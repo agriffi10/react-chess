@@ -6,7 +6,7 @@ import { ISimpleMove } from '../../interfaces/ISimpleMove';
 describe('Game History', () => {
   describe("Given I am playing a game of chess, when a move has been made, that move is displayed in the history tracker and attributed to the correct player'", () => {
     test('White captures queen with pawn', () => {
-      const baseColor: ISimpleMove = {
+      const baseMove: ISimpleMove = {
         color: 'w',
         after: '',
         before: '',
@@ -16,7 +16,7 @@ describe('Game History', () => {
         captured: 'q',
       };
 
-      const history: ISimpleMove[] = [{ ...baseColor }];
+      const history: ISimpleMove[] = [{ ...baseMove }];
       const firstTestId = 'history-line-0';
       render(<GameHistory history={history} />);
       const lineItem = screen.getByTestId(firstTestId);
@@ -26,7 +26,7 @@ describe('Game History', () => {
       );
     });
     test('Black moves pawn', () => {
-      const baseColor: ISimpleMove = {
+      const baseMove: ISimpleMove = {
         color: 'b',
         after: '',
         before: '',
@@ -35,7 +35,7 @@ describe('Game History', () => {
         to: 'd7',
       };
 
-      const history: ISimpleMove[] = [{ ...baseColor }];
+      const history: ISimpleMove[] = [{ ...baseMove }];
       const firstTestId = 'history-line-0';
       render(<GameHistory history={history} />);
       const lineItem = screen.getByTestId(firstTestId);

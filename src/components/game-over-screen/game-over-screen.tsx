@@ -23,10 +23,14 @@ const GameOverScreen = ({
       <div id="game-over-screen">
         <div className="card game-over-screen-content">
           <h2>Game Over!</h2>
-          {isDraw && !isThreefoldRepetition && <h3>Draw</h3>}
-          {isStalemate && <h3>Stalemate</h3>}
-          {isThreefoldRepetition && <h3>Threefold Repetition Detected</h3>}
-          {isCheckmate && <h3>{currentPlayer} Wins!</h3>}
+          {isDraw && !isThreefoldRepetition && <h3 data-testid="draw">Draw</h3>}
+          {isStalemate && <h3 data-testid="stalemate">Stalemate</h3>}
+          {isThreefoldRepetition && (
+            <h3 data-testid="threefold">Threefold Repetition Detected</h3>
+          )}
+          {isCheckmate && (
+            <h3 data-testid="checkmate">{currentPlayer} Wins!</h3>
+          )}
           <ResetButton resetFunc={resetGame} buttonTitle="Play Again?" />
         </div>
       </div>
