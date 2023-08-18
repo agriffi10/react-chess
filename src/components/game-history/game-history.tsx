@@ -1,6 +1,7 @@
 import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import { convertName } from '../../utilities/convert-name';
 import { convertPieceName } from '../../utilities/convert-piece-name';
+import { getPlayerClassModifier } from '../../utilities/get-player-class-modifier';
 import './game-history.css';
 
 interface IMoveHistoryProps {
@@ -8,19 +9,15 @@ interface IMoveHistoryProps {
 }
 
 const MoveHistory = ({ history }: IMoveHistoryProps) => {
-  const isWhite = (color: string) => {
-    return color === 'w';
-  };
-
   return (
     <div id="game-history" className="card">
       <h3>Total Moves - {history.length}</h3>
       <ul className="history-list">
         {history.map((item, index) => (
           <li
-            className={`card history-line ${
-              isWhite(item.color) ? '-white' : '-black'
-            }`}
+            className={`card history-line ${getPlayerClassModifier(
+              item.color
+            )}`}
             key={index}>
             <b>{convertName(item.color)}</b> moved{' '}
             {convertPieceName(item.piece)} from {item.from.toUpperCase()} to{' '}

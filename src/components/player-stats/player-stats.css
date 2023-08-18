@@ -1,11 +1,13 @@
+.player-stats-block {
+  min-width: 260px;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
 .player-stats-block .stats-block-name,
 .player-stats-block .stats-block-taken-title {
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
-}
-
-.player-stats-block .stats-block-name {
-  margin-top: 0;
 }
 
 .player-stats-block .stats-block-name,
@@ -17,6 +19,8 @@
 .player-stats-block .stats-block-name {
   background-color: #1a1a1a;
   padding: 0.5rem 1rem;
+  margin-top: 0;
+  border-radius: 8px 8px 0 0;
 }
 
 .player-stats-block .stats-block-taken-title {

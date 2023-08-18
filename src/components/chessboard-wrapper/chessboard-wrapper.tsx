@@ -5,12 +5,15 @@ import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import Alert from '../alert/alert';
 import MoveHistory from '../game-history/game-history';
 import GameOverScreen from '../game-over-screen/game-over-screen';
-import PlayerMenu from '../player-menu/player-menu';
 import 'react-toastify/dist/ReactToastify.css';
 import './chessboard-wrapper.css';
+import { convertName } from '../../utilities/convert-name';
+import CurrentPlayerBanner from '../current-player-banner/current-player-banner';
+import PlayerStats from '../player-stats/player-stats';
+import { Colors } from '../../constants/Players';
+import ResetButton from '../reset-button/reset-button';
 
 interface IPlayerMove {
-  piece: string;
   sourceSquare: string;
   targetSquare: string;
 }
@@ -28,19 +31,23 @@ const ChessBoardWrapper = () => {
   const [position, setPosition] = useState(game.fen());
   const [alertMessage, setAlertMessage] = useState('');
   const [playerHistory, setPlayerHistory] = useState<ISimpleMove[]>([]);
-  const [gameIsOver, setGameIsOver] = useState(false);
   const [squareStyles, setSquareStyles] = useState<{}>({});
+  const [currentPlayer, setCurrentPlayer] = useState<string>(
+    convertName(game.turn())
+  );
+  const [gameIsOver, setGameIsOver] = useState<boolean>(game.isGameOver());
 
-  const onDrop = ({ piece, sourceSquare, targetSquare }: IPlayerMove) => {
+  const onDrop = ({ sourceSquare, targetSquare }: IPlayerMove) => {
     if (sourceSquare === targetSquare) return;
-    // Making an illegal move was throwing an error, so we try/catch to handle each type of movement
+    // Making an illegal move throws an error, so we try/catch to handle each type of movement
     try {
       game.move({ from: sourceSquare, to: targetSquare, promotion: 'q' });
       setPosition(game.fen());
       setMoves();
+      setCurrentPlayer(convertName(game.turn()));
+      setGameIsOver(game.isGameOver());
     } catch (e) {
       checkPlayerState();
-      checkIfGameOver();
     }
   };
 
@@ -52,19 +59,16 @@ const ChessBoardWrapper = () => {
       ...playerHistory,
     ]);
     removeHighlightSquare();
-    checkIfGameOver();
   };
 
   const checkPlayerState = () => {
+    // This only alerts if you are current in check
+    // Moving your king to an in check position will just generate an invalid move
     if (game.isCheck()) {
       setAlertMessage('Check');
     } else {
       setAlertMessage('Invalid Move');
     }
-  };
-
-  const checkIfGameOver = () => {
-    setGameIsOver(game.isGameOver());
   };
 
   const clearMessageFromAlert = () => {
@@ -75,7 +79,6 @@ const ChessBoardWrapper = () => {
     game.clear();
     game.reset();
     setPosition('start');
-    checkIfGameOver();
     setPlayerHistory([]);
   };
 
@@ -125,6 +128,8 @@ const ChessBoardWrapper = () => {
           <MoveHistory history={playerHistory} />
         </div>
         <div className="board">
+          <CurrentPlayerBanner currentPlayer={currentPlayer} />
+
           <Chessboard
             onMouseOverSquare={onMouseOverSquare}
             position={position}
@@ -134,18 +139,28 @@ const ChessBoardWrapper = () => {
           />
         </div>
         <div className="menu">
-          <PlayerMenu
-            currentPlayer={game.turn()}
-            history={playerHistory}
-            resetGame={resetGame}
-          />
+          <PlayerStats color={Colors.w} history={playerHistory} />
+          <PlayerStats color={Colors.b} history={playerHistory} />
+          <ResetButton resetFunc={resetGame} buttonTitle="Reset Game" />
         </div>
       </div>
-      <Alert
-        message={alertMessage}
-        clearMessageFromAlert={clearMessageFromAlert}
-      />
-      {gameIsOver && <GameOverScreen resetGame={resetGame} />}
+      {alertMessage && (
+        <Alert
+          message={alertMessage}
+          clearMessageFromAlert={clearMessageFromAlert}
+        />
+      )}
+
+      {gameIsOver && playerHistory.length && (
+        <GameOverScreen
+          isCheckmate={game.isCheckmate()}
+          isStalemate={game.isStalemate()}
+          isDraw={game.isDraw()}
+          isThreefoldRepetition={game.isThreefoldRepetition()}
+          currentPlayer={convertName(playerHistory[0].color)}
+          resetGame={resetGame}
+        />
+      )}
     </>
   );
 };
