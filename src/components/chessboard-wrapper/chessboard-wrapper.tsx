@@ -1,5 +1,5 @@
 import Chessboard from 'chessboardjsx';
-import { Chess, Move, Square } from 'chess.js';
+import { Chess, Square } from 'chess.js';
 import { useState } from 'react';
 import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import Alert from '../alert/alert';
@@ -23,16 +23,10 @@ interface IHighlightStyleObject {
   [key: string]: IHighlightStyle;
 }
 
-interface ISquareStyling {
-  pieceSquare: string;
-  history: Move[];
-}
-
 const ChessBoardWrapper = () => {
   const [game] = useState(new Chess());
   const [position, setPosition] = useState(game.fen());
   const [alertMessage, setAlertMessage] = useState('');
-  const [currentPlayer, setCurrentPlayer] = useState('White');
   const [playerHistory, setPlayerHistory] = useState<ISimpleMove[]>([]);
   const [gameIsOver, setGameIsOver] = useState(false);
   const [squareStyles, setSquareStyles] = useState<{}>({});
@@ -43,7 +37,6 @@ const ChessBoardWrapper = () => {
     try {
       game.move({ from: sourceSquare, to: targetSquare, promotion: 'q' });
       setPosition(game.fen());
-      checkCurrentPlayer();
       setMoves();
     } catch (e) {
       checkPlayerState();
@@ -70,14 +63,6 @@ const ChessBoardWrapper = () => {
     }
   };
 
-  const checkCurrentPlayer = () => {
-    if (currentPlayer === 'White') {
-      setCurrentPlayer('Black');
-    } else {
-      setCurrentPlayer('White');
-    }
-  };
-
   const checkIfGameOver = () => {
     setGameIsOver(game.isGameOver());
   };
@@ -89,7 +74,6 @@ const ChessBoardWrapper = () => {
   const resetGame = () => {
     game.clear();
     game.reset();
-    setCurrentPlayer('White');
     setPosition('start');
     checkIfGameOver();
     setPlayerHistory([]);
@@ -150,7 +134,11 @@ const ChessBoardWrapper = () => {
           />
         </div>
         <div className="menu">
-          <PlayerMenu currentPlayer={currentPlayer} resetGame={resetGame} />
+          <PlayerMenu
+            currentPlayer={game.turn()}
+            history={playerHistory}
+            resetGame={resetGame}
+          />
         </div>
       </div>
       <Alert

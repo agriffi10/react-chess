@@ -1,4 +1,9 @@
 export enum Players {
-  WHITE = 'WHITE',
-  BLACK = 'BLACK',
+  WHITE = 'White',
+  BLACK = 'Black',
+}
+
+export enum Colors {
+  w = 'w',
+  b = 'b',
 }

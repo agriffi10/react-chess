@@ -1,6 +1,6 @@
-import { Pieces } from '../../constants/Pieces';
-import { Players } from '../../constants/Players';
 import { ISimpleMove } from '../../interfaces/ISimpleMove';
+import { convertName } from '../../utilities/convert-name';
+import { convertPieceName } from '../../utilities/convert-piece-name';
 import './game-history.css';
 
 interface IMoveHistoryProps {
@@ -10,29 +10,6 @@ interface IMoveHistoryProps {
 const MoveHistory = ({ history }: IMoveHistoryProps) => {
   const isWhite = (color: string) => {
     return color === 'w';
-  };
-  const convertName = (color: string) => {
-    if (isWhite(color)) {
-      return <b>{Players.WHITE}</b>;
-    }
-    return <b>{Players.BLACK}</b>;
-  };
-
-  const convertPieceName = (piece: string) => {
-    switch (piece.toLowerCase()) {
-      case 'b':
-        return Pieces.BISHOP;
-      case 'r':
-        return Pieces.ROOK;
-      case 'n':
-        return Pieces.KNIGHT;
-      case 'k':
-        return Pieces.KING;
-      case 'q':
-        return Pieces.QUEEN;
-      default:
-        return Pieces.PAWN;
-    }
   };
 
   return (
@@ -45,8 +22,9 @@ const MoveHistory = ({ history }: IMoveHistoryProps) => {
               isWhite(item.color) ? '-white' : '-black'
             }`}
             key={index}>
-            {convertName(item.color)} moved {convertPieceName(item.piece)} from{' '}
-            {item.from.toUpperCase()} to {item.to.toUpperCase()}
+            <b>{convertName(item.color)}</b> moved{' '}
+            {convertPieceName(item.piece)} from {item.from.toUpperCase()} to{' '}
+            {item.to.toUpperCase()}
           </li>
         ))}
       </ul>
