@@ -20,3 +20,7 @@ export interface IHighlightStyle {
 export interface IHighlightStyleObject {
   [key: string]: IHighlightStyle;
 }
+
+export interface IBoardWidthObject {
+  screenWidth: number;
+}

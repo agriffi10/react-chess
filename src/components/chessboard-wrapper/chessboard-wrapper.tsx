@@ -15,6 +15,7 @@ import {
   IPlayerMove,
   IHighlightStyleObject,
   ISimpleMove,
+  IBoardWidthObject,
 } from '../../interfaces/IDataObjects';
 import { getHighlightStyle } from '../../utilities/get-highlight-style';
 
@@ -146,6 +147,11 @@ const ChessBoardWrapper = () => {
     if (!currentSquare) removeHighlightSquare();
   }, [currentSquare]);
 
+  const calcWidth = ({ screenWidth }: IBoardWidthObject) => {
+    // We either want the board to be 560px or scale down based on screen size
+    return Math.min(Math.floor(screenWidth * 0.85), 560);
+  };
+
   return (
     <>
       <div id="play-area">
@@ -163,6 +169,7 @@ const ChessBoardWrapper = () => {
             onSquareRightClick={deselectSquare}
             onSquareClick={onSquareClick}
             onDrop={onDrop}
+            calcWidth={calcWidth}
           />
         </div>
         <div className="menu">
