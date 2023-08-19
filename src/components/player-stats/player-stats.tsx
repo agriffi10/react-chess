@@ -22,7 +22,7 @@ const PlayerStats = ({ color, history }: IPlayerStatsProps) => {
         <div>
           {keys.map((key) => (
             <div
-              data-testid={key}
+              data-testid={`taken-${key}-${color}`}
               className="stats-block-taken-piece"
               key={key}>
               {convertPieceName(key)}

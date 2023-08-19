@@ -68,7 +68,7 @@ const ChessBoardWrapper = () => {
   const checkPlayerState = (onlyForCheck: boolean = false) => {
     // This only alerts if you are current in check
     // Moving your king to an in check position will just generate an invalid move
-    if (game.isCheck()) {
+    if (game.isCheck() && !game.isGameOver()) {
       // Needed a flag onlyForCheck so when Player X puts Player Y in check
       // then an appropriate notification is generated.
       setAlertMessage('Check');
@@ -89,6 +89,7 @@ const ChessBoardWrapper = () => {
     game.reset();
     setPosition('start');
     setPlayerHistory([]);
+    setCurrentPlayer(convertName(game.turn()));
   };
 
   const getCurrentGameHistory = () => {

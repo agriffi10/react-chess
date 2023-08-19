@@ -74,7 +74,7 @@ describe('Player Stats', () => {
       };
       render(<PlayerStats history={history} color={Colors.w} />);
       for (const key in counts) {
-        const countItem = screen.getByTestId(key);
+        const countItem = screen.getByTestId(`taken-${key}-${Colors.w}`);
         expect(countItem).toBeInTheDocument();
         expect(countItem).toHaveTextContent(
           `${convertPieceName(key)}(s) Lost: ${counts[key]}`

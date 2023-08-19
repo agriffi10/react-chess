@@ -5,8 +5,10 @@ interface IResetButtonProps {
 
 const ResetButton = ({ buttonTitle, resetFunc }: IResetButtonProps) => {
   return (
-    <div id="player-actions" className="card">
-      <button onClick={resetFunc}>{buttonTitle}</button>
+    <div className="card player-actions">
+      <button type="button" onClick={resetFunc}>
+        {buttonTitle}
+      </button>
     </div>
   );
 };
