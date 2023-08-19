@@ -1,7 +1,4 @@
-interface IResetButtonProps {
-  buttonTitle: string;
-  resetFunc: () => void;
-}
+import { IResetButtonProps } from '../../interfaces/IComponentProps';
 
 const ResetButton = ({ buttonTitle, resetFunc }: IResetButtonProps) => {
   return (

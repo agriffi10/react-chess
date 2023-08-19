@@ -1,9 +1,6 @@
+import { ICurrentPlayerBannerProps } from '../../interfaces/IComponentProps';
 import { getPlayerClassModifier } from '../../utilities/get-player-class-modifier';
 import './current-player-banner.css';
-
-interface ICurrentPlayerBannerProps {
-  currentPlayer: string;
-}
 
 const CurrentPlayerBanner = ({ currentPlayer }: ICurrentPlayerBannerProps) => {
   return (

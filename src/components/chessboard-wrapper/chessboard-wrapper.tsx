@@ -1,7 +1,6 @@
 import Chessboard from 'chessboardjsx';
 import { Chess, Square } from 'chess.js';
 import { useMemo, useState } from 'react';
-import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import Alert from '../alert/alert';
 import GameHistory from '../game-history/game-history';
 import GameOverScreen from '../game-over-screen/game-over-screen';
@@ -12,21 +11,11 @@ import CurrentPlayerBanner from '../current-player-banner/current-player-banner'
 import PlayerStats from '../player-stats/player-stats';
 import { Colors } from '../../constants/Players';
 import ResetButton from '../reset-button/reset-button';
-
-interface IPlayerMove {
-  sourceSquare: string;
-  targetSquare: string;
-}
-interface IHighlightStyle {
-  background?: string;
-  borderRadius?: string;
-  border?: string;
-  borderStyle?: string;
-}
-
-interface IHighlightStyleObject {
-  [key: string]: IHighlightStyle;
-}
+import {
+  IPlayerMove,
+  IHighlightStyleObject,
+  ISimpleMove,
+} from '../../interfaces/IDataObjects';
 
 const ChessBoardWrapper = () => {
   const [game] = useState(new Chess());

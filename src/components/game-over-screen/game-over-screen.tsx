@@ -1,14 +1,6 @@
+import { IGameOverScreenProps } from '../../interfaces/IComponentProps';
 import ResetButton from '../reset-button/reset-button';
 import './game-over-screen.css';
-
-interface IGameOverScreenProps {
-  isStalemate: boolean;
-  isDraw: boolean;
-  isCheckmate: boolean;
-  isThreefoldRepetition: boolean;
-  currentPlayer: string;
-  resetGame: () => void;
-}
 
 const GameOverScreen = ({
   isCheckmate,

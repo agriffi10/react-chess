@@ -1,10 +1,6 @@
 import { useMemo } from 'react';
 import { ToastContainer, ToastItem, toast } from 'react-toastify';
-
-interface IAlertProps {
-  message: string;
-  clearMessageFromAlert: () => void;
-}
+import { IAlertProps } from '../../interfaces/IComponentProps';
 
 const Alert = ({ message, clearMessageFromAlert }: IAlertProps) => {
   const generateAlertMessage = () => {

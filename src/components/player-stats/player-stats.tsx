@@ -1,14 +1,10 @@
 import { useMemo, useState } from 'react';
-import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import { convertName } from '../../utilities/convert-name';
 import { convertPieceName } from '../../utilities/convert-piece-name';
 import { getCapturedPieces } from '../../utilities/get-captured-pieces';
 import './player-stats.css';
-
-interface IPlayerStatsProps {
-  color: string;
-  history: ISimpleMove[];
-}
+import { IPlayerStatsProps } from '../../interfaces/IComponentProps';
+import { ISimpleMove } from '../../interfaces/IDataObjects';
 
 const PlayerStats = ({ color, history }: IPlayerStatsProps) => {
   // Keeping this in here so I don't have to mix .tsx files in my utils folder

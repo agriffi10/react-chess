@@ -1,12 +1,9 @@
-import { ISimpleMove } from '../../interfaces/ISimpleMove';
+import { IGameHistoryProps } from '../../interfaces/IComponentProps';
+import { ISimpleMove } from '../../interfaces/IDataObjects';
 import { convertName } from '../../utilities/convert-name';
 import { convertPieceName } from '../../utilities/convert-piece-name';
 import { getPlayerClassModifier } from '../../utilities/get-player-class-modifier';
 import './game-history.css';
-
-interface IGameHistoryProps {
-  history: ISimpleMove[];
-}
 
 const GameHistory = ({ history }: IGameHistoryProps) => {
   const getHistoryItem = (item: ISimpleMove, index: number) => {
