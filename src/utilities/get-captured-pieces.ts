@@ -1,4 +1,4 @@
-import { ISimpleMove } from '../interfaces/ISimpleMove';
+import { ISimpleMove } from '../interfaces/IDataObjects';
 
 interface ICapturedPiecesObject {
   [key: string]: number;

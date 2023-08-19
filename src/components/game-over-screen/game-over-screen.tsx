@@ -10,6 +10,7 @@ const GameOverScreen = ({
   currentPlayer,
   resetGame,
 }: IGameOverScreenProps) => {
+  // Draw can trigger for both draw states and threefold repetition states
   return (
     <>
       <div id="game-over-screen">

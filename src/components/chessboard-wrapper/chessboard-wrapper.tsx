@@ -16,6 +16,7 @@ import {
   IHighlightStyleObject,
   ISimpleMove,
 } from '../../interfaces/IDataObjects';
+import { getHighlightStyle } from '../../utilities/get-highlight-style';
 
 const ChessBoardWrapper = () => {
   const [game] = useState(new Chess());
@@ -103,8 +104,7 @@ const ChessBoardWrapper = () => {
     for (let i = 0; i < squares.length; i++) {
       const key = squares[i];
       highlightStyles[key] = {
-        background: 'radial-gradient(circle, #aec6cf 36%, transparent 40%)',
-        borderRadius: '50%',
+        ...getHighlightStyle(),
       };
     }
     setSquareStyles({ ...highlightStyles });
@@ -129,10 +129,7 @@ const ChessBoardWrapper = () => {
     } else if (!currentSquare) {
       // We're setting a brand new current square
       const highlightStyles: IHighlightStyleObject = {};
-      highlightStyles[square] = {
-        border: '2px solid yellow',
-        borderStyle: 'inset',
-      };
+      highlightStyles[square] = { ...getHighlightStyle() };
       setCurrentSquare(square);
       setSquareStyles({ ...squareStyles, ...highlightStyles });
     } else if (square === currentSquare) {

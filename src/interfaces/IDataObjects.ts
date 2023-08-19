@@ -15,8 +15,6 @@ export interface IPlayerMove {
 export interface IHighlightStyle {
   background?: string;
   borderRadius?: string;
-  border?: string;
-  borderStyle?: string;
 }
 
 export interface IHighlightStyleObject {
