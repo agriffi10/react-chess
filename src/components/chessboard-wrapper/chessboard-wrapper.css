@@ -20,28 +20,6 @@
   width: 100%;
 }
 
-@media (max-width: 1199px) {
-  #play-area {
-    flex-direction: column;
-  }
-
-  #play-area .board,
-  #play-area .menu,
-  #play-area.history {
-    margin-bottom: 1rem;
-  }
-
-  #play-area .board {
-    order: 0;
-  }
-  #play-area .menu {
-    order: 1;
-  }
-  #play-area .history {
-    order: 2;
-  }
-
-  #play-area .menu .player-actions {
-    margin-top: 0.5rem;
-  }
+#play-area div[data-boardid] {
+  margin: 0 auto;
 }

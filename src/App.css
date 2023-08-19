@@ -11,3 +11,45 @@
   margin: 0.5rem 0;
   background-color: #6b695e;
 }
+
+@media (max-width: 1199px) {
+  #play-area {
+    flex-direction: column;
+  }
+
+  #play-area .board,
+  #play-area .menu,
+  #play-area.history {
+    margin-bottom: 1rem;
+  }
+
+  #play-area .board {
+    order: 0;
+  }
+  #play-area .menu {
+    order: 1;
+  }
+  #play-area .history {
+    order: 2;
+  }
+
+  #game-history .history-list .history-line {
+    max-width: 100%;
+  }
+
+  #play-area .menu .player-actions {
+    margin-top: 0.5rem;
+  }
+
+  #current-player-banner,
+  .player-stats-block,
+  .player-actions,
+  #game-history {
+    margin: 0 auto;
+  }
+
+  #play-area .player-stats-block,
+  #play-area #game-history {
+    min-width: 0;
+  }
+}
