@@ -1,7 +1,6 @@
 import Chessboard from 'chessboardjsx';
 import { Chess, Square } from 'chess.js';
 import { useMemo, useState } from 'react';
-import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import Alert from '../alert/alert';
 import GameHistory from '../game-history/game-history';
 import GameOverScreen from '../game-over-screen/game-over-screen';
@@ -12,21 +11,13 @@ import CurrentPlayerBanner from '../current-player-banner/current-player-banner'
 import PlayerStats from '../player-stats/player-stats';
 import { Colors } from '../../constants/Players';
 import ResetButton from '../reset-button/reset-button';
-
-interface IPlayerMove {
-  sourceSquare: string;
-  targetSquare: string;
-}
-interface IHighlightStyle {
-  background?: string;
-  borderRadius?: string;
-  border?: string;
-  borderStyle?: string;
-}
-
-interface IHighlightStyleObject {
-  [key: string]: IHighlightStyle;
-}
+import {
+  IPlayerMove,
+  IHighlightStyleObject,
+  ISimpleMove,
+  IBoardWidthObject,
+} from '../../interfaces/IDataObjects';
+import { getHighlightStyle } from '../../utilities/get-highlight-style';
 
 const ChessBoardWrapper = () => {
   const [game] = useState(new Chess());
@@ -114,8 +105,7 @@ const ChessBoardWrapper = () => {
     for (let i = 0; i < squares.length; i++) {
       const key = squares[i];
       highlightStyles[key] = {
-        background: 'radial-gradient(circle, #aec6cf 36%, transparent 40%)',
-        borderRadius: '50%',
+        ...getHighlightStyle(),
       };
     }
     setSquareStyles({ ...highlightStyles });
@@ -140,10 +130,7 @@ const ChessBoardWrapper = () => {
     } else if (!currentSquare) {
       // We're setting a brand new current square
       const highlightStyles: IHighlightStyleObject = {};
-      highlightStyles[square] = {
-        border: '2px solid yellow',
-        borderStyle: 'inset',
-      };
+      highlightStyles[square] = { ...getHighlightStyle() };
       setCurrentSquare(square);
       setSquareStyles({ ...squareStyles, ...highlightStyles });
     } else if (square === currentSquare) {
@@ -159,6 +146,11 @@ const ChessBoardWrapper = () => {
   useMemo(() => {
     if (!currentSquare) removeHighlightSquare();
   }, [currentSquare]);
+
+  const calcWidth = ({ screenWidth }: IBoardWidthObject) => {
+    // We either want the board to be 560px or scale down based on screen size
+    return Math.min(Math.floor(screenWidth * 0.85), 560);
+  };
 
   return (
     <>
@@ -177,6 +169,7 @@ const ChessBoardWrapper = () => {
             onSquareRightClick={deselectSquare}
             onSquareClick={onSquareClick}
             onDrop={onDrop}
+            calcWidth={calcWidth}
           />
         </div>
         <div className="menu">

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import GameHistory from './game-history';
-import { ISimpleMove } from '../../interfaces/ISimpleMove';
+import { ISimpleMove } from '../../interfaces/IDataObjects';
 
 describe('Game History', () => {
   describe("Given I am playing a game of chess, when a move has been made, that move is displayed in the history tracker and attributed to the correct player'", () => {

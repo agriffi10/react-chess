@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ISimpleMove } from '../../interfaces/ISimpleMove';
 import { Colors } from '../../constants/Players';
 import PlayerStats from './player-stats';
 import { convertPieceName } from '../../utilities/convert-piece-name';
+import { ISimpleMove } from '../../interfaces/IDataObjects';
 
 describe('Player Stats', () => {
   describe('Given I am a player, when a piece is taken and recorded in the move history, then my piece lost count is correct', () => {

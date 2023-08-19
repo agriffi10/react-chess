@@ -28,8 +28,8 @@ Runs the suite of unit tests and tells you how much code coverage exists.
 
 #### cypress
 
-Runs Cypress in interactive mode so you can see your tests run in its simulated browser
+Runs Cypress in interactive mode so you can see your tests run in its simulated browser. The app must be served on localhost first for this to work.
 
 #### e2e
 
-Run Cypress in your terminal for ease of use and speed.
+Run Cypress in your terminal for ease of use and speed. The app must be served on localhost first for this to work.
