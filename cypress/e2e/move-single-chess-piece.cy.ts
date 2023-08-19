@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 context('Moving one piece on the board', () => {
   beforeEach(() => {
     cy.visit('/');

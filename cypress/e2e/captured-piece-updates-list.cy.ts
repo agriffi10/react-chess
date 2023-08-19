@@ -1,3 +1,5 @@
+/// <reference types="Cypress" />
+
 context('Making an illegal move on the board', () => {
   beforeEach(() => {
     cy.visit('/');

@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 context('Playing a game to the end', () => {
   beforeEach(() => {
     cy.visit('/');

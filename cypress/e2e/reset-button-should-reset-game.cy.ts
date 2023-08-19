@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 context('Hitting The Reset Button', () => {
   beforeEach(() => {
     cy.visit('/');
