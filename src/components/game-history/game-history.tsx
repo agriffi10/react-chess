@@ -4,14 +4,15 @@ import { convertPieceName } from '../../utilities/convert-piece-name';
 import { getPlayerClassModifier } from '../../utilities/get-player-class-modifier';
 import './game-history.css';
 
-interface IMoveHistoryProps {
+interface IGameHistoryProps {
   history: ISimpleMove[];
 }
 
-const MoveHistory = ({ history }: IMoveHistoryProps) => {
+const GameHistory = ({ history }: IGameHistoryProps) => {
   const getHistoryItem = (item: ISimpleMove, index: number) => {
     return (
       <li
+        data-testid={`history-line-${index}`}
         className={`card history-line ${getPlayerClassModifier(item.color)}`}
         key={index}>
         <b>{convertName(item.color)}</b> moved {convertPieceName(item.piece)}{' '}
@@ -31,4 +32,4 @@ const MoveHistory = ({ history }: IMoveHistoryProps) => {
   );
 };
 
-export default MoveHistory;
+export default GameHistory;

@@ -9,6 +9,7 @@ const CurrentPlayerBanner = ({ currentPlayer }: ICurrentPlayerBannerProps) => {
   return (
     <h2
       id="current-player-banner"
+      data-testid="player-banner"
       className={` ${getPlayerClassModifier(currentPlayer)}`}>
       {currentPlayer}'s Move
     </h2>

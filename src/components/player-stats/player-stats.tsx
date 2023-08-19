@@ -21,7 +21,10 @@ const PlayerStats = ({ color, history }: IPlayerStatsProps) => {
       <div className="stats-block-taken-pieces-list">
         <div>
           {keys.map((key) => (
-            <div className="stats-block-taken-piece" key={key}>
+            <div
+              data-testid={`taken-${key}-${color}`}
+              className="stats-block-taken-piece"
+              key={key}>
               {convertPieceName(key)}
               {'(s)'} Lost: {captured[key]}
             </div>
