@@ -2,6 +2,8 @@
 
 Welcome to simple chess! A delightful and pleasing way to learn chess and practice your moves. This project was built using Vite + React + TypeScript.
 
+[Published App](https://rococo-bavarois-680f44.netlify.app/)
+
 ## Setup
 
 To run this app locally, pull down the `main` branch and run `npm run dev`, which will spin up a localhost URL for you to access in your browser.
